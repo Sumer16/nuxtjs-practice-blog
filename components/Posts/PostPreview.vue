@@ -1,14 +1,13 @@
 <template>
-  <nuxt-link v-bind:to="'/posts/' + id" class="post-preview">
-        <article>
-          <div class="post-thumbnail" :style="{backgroundImage: 'url(' + thumbnail + ')'}">
-          </div>
-          <div class="post-content">
-            <h1>{{ title }}</h1>
-            <h1>{{ previewText }}</h1>
-          </div>
-        </article>
-      </nuxt-link>
+  <nuxt-link v-bind:to="postLink" class="post-preview">
+    <article>
+      <div class="post-thumbnail" :style="{backgroundImage: 'url(' + thumbnail + ')'}"></div>
+        <div class="post-content">
+          <h1>{{ title }}</h1>
+          <h1>{{ previewText }}</h1>
+        </div>
+    </article>
+  </nuxt-link>
 </template>
 
 <script>
@@ -17,6 +16,10 @@ export default {
   props: {
     id: {
       type: String, 
+      required: true
+    },
+    isAdmin:{
+      type: Boolean,
       required: true
     },
     title: {
@@ -30,6 +33,11 @@ export default {
     thumbnail: {
       type: String,
       required: true
+    }
+  },
+  computed: {
+    postLink() {
+      return this.isAdmin ? '/admin/' + this.id : '/posts/' + this.id;
     }
   }
 }
