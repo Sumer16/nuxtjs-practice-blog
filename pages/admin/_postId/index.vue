@@ -22,7 +22,8 @@ export default {
         thumbnailLink: 'https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
       }
     }
-  }
+  },
+  layout: 'admin'
 }
 </script>
 
