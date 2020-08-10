@@ -3,17 +3,23 @@
     <section class="intro">
       <h1>Get the latest tech news</h1>
     </section>
-    <PostList />
+    <PostList :posts="loadedPosts" />
   </div>
 </template>
 
 <script>
-import PostList from '@/components/Posts/PostList'
+import PostList from "@/components/Posts/PostList";
+
 export default {
   components: {
-    PostList
+    PostList,
+  },
+  computed: {
+    loadedPosts() {
+      return this.$store.getters.loadedPosts
+    }
   }
-}
+};
 </script>
 
 <style>
@@ -24,7 +30,7 @@ export default {
   box-sizing: border-box;
   background-position: center;
   background-size: cover;
-  background-image: url('~assets/images/img2.jpg');
+  background-image: url("~assets/images/img2.jpg");
   text-align: center;
 }
 
@@ -48,6 +54,4 @@ export default {
     font-size: 2rem;
   }
 }
-
-
 </style>
