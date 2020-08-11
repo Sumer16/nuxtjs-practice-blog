@@ -7,18 +7,17 @@
 </template>
 
 <script>
-import AdminPostForm from '@/components/Admin/AdminPostForm'
-import axios from 'axios'
+import AdminPostForm from '@/components/Admin/AdminPostForm';
 
 export default {
   components: {
     AdminPostForm
   },
   asyncData(context) {
-    return axios.get('{YOUR_DATABASE_URL}/posts/' + context.params.postId + '.json')
-    .then(res => {
+    return context.app.$axios.$get('/posts/' + context.params.postId + '.json')
+    .then(data => {
       return {
-        loadedPost: { ...res.data, id: context.params.postId }
+        loadedPost: { ...data, id: context.params.postId }
       }
     })
     .catch(err => {
