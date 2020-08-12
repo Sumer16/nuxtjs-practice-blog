@@ -1,3 +1,5 @@
+const bodyParser = require('body-parser');
+const axios = require('axios');
 
 export default {
   /*
@@ -68,7 +70,7 @@ export default {
     '@nuxtjs/axios',
   ],
   axios: {
-    baseURL: process.env.BASE_URL || '{YOUR_DATABASE_URL}',
+    baseURL: process.env.BASE_URL || 'https://nuxt-practice-project.firebaseio.com',
     credentials: false
   },
   /*
@@ -78,10 +80,33 @@ export default {
   build: {
   },
   env: {
-    baseUrl: process.env.BASE_URL || '{YOUR_DATABASE_URL}'
+    baseUrl: process.env.BASE_URL || 'https://nuxt-practice-project.firebaseio.com',
+    fbAPIKey: '{YOUR_FIREBASE_API}'
   },
   transition: {
     name: 'fade',
     mode: 'out-in'
+  },
+  // router: {
+  //   middleware: 'log'
+  // }
+  serverMiddleware: [
+    bodyParser.json(),
+    '~/api'
+  ],
+  generate: {
+    routes: function() {
+      return axios.get('https://nuxt-practice-project.firebaseio.com')
+      .then(res => {
+        const routes = [];
+        for(const key in res.data) {
+          routes.push({ 
+            route: '/posts/' + key,
+            payload: {postData: res.data[key]}
+          })
+        }
+        return routes
+      })
+    }
   }
 }
